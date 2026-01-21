@@ -1,6 +1,6 @@
 package edu.malaka96.controllers;
 
-import edu.malaka96.model.User;
+import edu.malaka96.model.UserModel;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @GetMapping("/")
-    public User getUser() {
-        return new User("Malaka", "0704132218", "ASE");
+    public UserModel getUser() {
+        return new UserModel("Malaka", "0704132218", "ASE");
     }
 
     @GetMapping("/session-id")
@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping("/add-user")
-    public User addUser(@RequestBody User user) {
+    public UserModel addUser(@RequestBody UserModel user) {
         return user;
     }
 

@@ -1,11 +1,11 @@
 package edu.malaka96.model;
 
-public class User {
+public class UserModel {
     private String name;
     private String phone;
     private String position;
 
-    public User(String name, String phone, String position) {
+    public UserModel(String name, String phone, String position) {
         this.name = name;
         this.phone = phone;
         this.position = position;
