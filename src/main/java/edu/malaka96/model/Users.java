@@ -14,7 +14,7 @@ import lombok.*;
 @NoArgsConstructor
 public class Users {
     @Id
-    private int id;
+    private Integer id;
     private String name;
     private String password;
 }

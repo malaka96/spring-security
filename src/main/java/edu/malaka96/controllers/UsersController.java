@@ -27,8 +27,7 @@ public class UsersController {
     }
 
     @PostMapping("/users/login")
-    public Users login(@RequestBody Users user){
-        System.out.println(user + "loged user");
-        return user;
+    public String login(@RequestBody Users user){
+        return usersService.verify(user);
     }
 }
