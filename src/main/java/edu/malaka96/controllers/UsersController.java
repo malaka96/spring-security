@@ -25,4 +25,10 @@ public class UsersController {
     public Users addUser(@RequestBody Users user){
         return usersService.addUser(user);
     }
+
+    @PostMapping("/users/login")
+    public Users login(@RequestBody Users user){
+        System.out.println(user + "loged user");
+        return user;
+    }
 }
