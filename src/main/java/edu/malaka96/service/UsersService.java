@@ -16,6 +16,7 @@ import java.util.List;
 public class UsersService {
     final UserRepository userRepository;
     final AuthenticationManager authenticationManager;
+    final JWTService jwtService;
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
@@ -33,7 +34,7 @@ public class UsersService {
                 authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getName(), user.getPassword()));
 
         if(authentication.isAuthenticated())
-            return new JWTService().generateToken(user.getName());
+            return jwtService.generateToker(user.getName());
 
         return "Fail";
     }

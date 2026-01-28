@@ -20,62 +20,54 @@ import java.util.function.Function;
 @Service
 public class JWTService {
 
-//    private String secretKey = "";
-//
-//    public JWTService(){
-//        try {
-//            KeyGenerator keyGenerator = KeyGenerator.getInstance("HmacSHA256");
-//            SecretKey sk = keyGenerator.generateKey();
-//            secretKey = Base64.getEncoder().encodeToString(sk.getEncoded());
-//        } catch (NoSuchAlgorithmException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//    }
-//
-//    public  String generateToker(String name) {
-//
-//        Map<String, Object> claims = new HashMap<>();
-//
+    private String secretKey = "my-key";
+
+    public JWTService(){
+        try {
+            KeyGenerator keyGenerator = KeyGenerator.getInstance("HmacSHA256");
+            SecretKey sk = keyGenerator.generateKey();
+            secretKey = Base64.getEncoder().encodeToString(sk.getEncoded());
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public  String generateToker(String name) {
+
+        Map<String, Object> claims = new HashMap<>();
+
 //        return Jwts.builder()
 //                .claims()
 //                .add(claims)
 //                .subject(name)
 //                .issuedAt(new Date(System.currentTimeMillis()))
-//                .expiration(new Date(System.currentTimeMillis() + 60 * 60 * 30))
+//                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 30))
 //                .and()
 //                .signWith(getKey())
 //                .compact();
-//
-//    }
 
-    private static final String SECRET_KEY =
-            "my-super-secret-key-my-super-secret-key";
-
-    public String generateToken(String name) {
         return Jwts.builder()
                 .subject(name)
-                .issuedAt(new Date())
+                .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 30))
                 .signWith(getKey())
                 .compact();
+
     }
 
-//    private SecretKey getKey(){
-////        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
-////        return Keys.hmacShaKeyFor(keyBytes);
-//    }
-
-    private SecretKey getKey() {
-        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+    private SecretKey getKey(){
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 
     public String extractUserName(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
-    private <T> T extractClaim(String token, Function<Claims, T> resolver) {
-        return resolver.apply(extractAllClaims(token));
+    private <T> T extractClaim(String token, Function<Claims, T> claimResolver) {
+        final Claims claims = extractAllClaims(token);
+        return claimResolver.apply(claims);
     }
 
     private Claims extractAllClaims(String token) {
