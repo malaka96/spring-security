@@ -33,7 +33,7 @@ public class UsersService {
                 authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getName(), user.getPassword()));
 
         if(authentication.isAuthenticated())
-            return "Success";
+            return new JWTService().generateToker(user.getName());
 
         return "Fail";
     }
